@@ -4,7 +4,7 @@ metadata:
   annotations:
     flux.weave.works/automated: "true"
   name: webapp
-  namespace: k8s-workshop
+  namespace: django-multi-tier
 spec:
   selector:
     matchLabels:
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: webapp
-          image: quay.io/fairwinds/k8s-workshop:latest
+          image: quay.io/fairwinds/django-multi-tier:latest
           command: ["ruby", "app/app.rb"]
           imagePullPolicy: IfNotPresent
           livenessProbe:

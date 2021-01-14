@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: webapp
-  namespace: k8s-workshop
+  namespace: django-multi-tier
   labels:
     app: webapp
 spec:

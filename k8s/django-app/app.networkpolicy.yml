@@ -1,19 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: redis
-  namespace: k8s-workshop
+  name: app
+  namespace: django-multi-tier
 spec:
   podSelector:
     matchLabels:
-      app: redis
+      app: webapp
   policyTypes:
   - Ingress
   ingress:
   - from:
-    - podSelector:
-        matchLabels:
-          app: webapp
+    - ipBlock:
+        cidr: 0.0.0.0/0
     ports:
     - protocol: TCP
-      port: 6379
+      port: 8080

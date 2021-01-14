@@ -20,16 +20,16 @@ First we'll be:
       Gets the `deployment` resources from Kubernetes in the `default` namespace. You will not see the redis deployments since we have deployed them to a different namespace.
     * `kubectl get pods`
       Gets the pods in the `default` namespace. You won't see the redis pods since they've been created in another namespace.
-    * `kubectl get --namespace k8s-workshop deployments,pods`
-      Gets the `deployments` _and_ `pods` with `kubectl` in the `k8s-workshop` namespace. You should now see that adding `--namespace k8s-workshop` will scope your `get` request to the `k8s-workshop` namespace.
-    * `kubectl describe --namespace k8s-workshop pod <pod name>`
+    * `kubectl get --namespace django-multi-tier deployments,pods`
+      Gets the `deployments` _and_ `pods` with `kubectl` in the `django-multi-tier` namespace. You should now see that adding `--namespace django-multi-tier` will scope your `get` request to the `django-multi-tier` namespace.
+    * `kubectl describe --namespace django-multi-tier pod <pod name>`
       Describes the current state of the `<pod name>` pod in Kubernetes. You can copy paste the name of the pod where you see `<pod name>`.
-    * `kubectl get --namespace k8s-workshop services`
-      This lists all the `service` definitions in the `k8s-workshop` namespace.
-    * `kubectl logs --namespace k8s-workshop <pod name>`
-      This prints the pods (containers) `logs` to your terminal. You can paste any pod name in the `k8s-workshop` namespace to replace `<pod name>`.
+    * `kubectl get --namespace django-multi-tier services`
+      This lists all the `service` definitions in the `django-multi-tier` namespace.
+    * `kubectl logs --namespace django-multi-tier <pod name>`
+      This prints the pods (containers) `logs` to your terminal. You can paste any pod name in the `django-multi-tier` namespace to replace `<pod name>`.
 
-We should now see a healthy Redis Master and Replica in the `k8s-workshop` namespace in Kubernetes.
+We should now see a healthy Redis Master and Replica in the `django-multi-tier` namespace in Kubernetes.
 
 ### Deploying the Web App
 Next we'll be:
@@ -54,10 +54,10 @@ Next we'll be:
       Let's look at the errors in the logs from the pod... Cannot connect to redis because it's default namespace DNS resolution won't work from a different namespace.
 1. Fix the broken deployment
     * `kubectl delete -f 02_webapp/`
-      This will delete all the objects we created so that we can deploy correctly into the `k8s-workshop` namespace.
-    * `kubectl apply -f 02_webapp/ --namespace k8s-workshop`
-      This overrides the unset `default` namespace and deploys all the yaml files into the `k8s-workshop` namespace.
-    * `kubectl get services --namespace k8s-workshop`
+      This will delete all the objects we created so that we can deploy correctly into the `django-multi-tier` namespace.
+    * `kubectl apply -f 02_webapp/ --namespace django-multi-tier`
+      This overrides the unset `default` namespace and deploys all the yaml files into the `django-multi-tier` namespace.
+    * `kubectl get services --namespace django-multi-tier`
       We need to see the _new_ service we've created, so the Load Balancer IP will have changed.
 1. Test the new deployment
     * `curl [external_ip]/asdf/1234`
@@ -70,5 +70,5 @@ This section allows us to load test the web app and see the cluster responding b
 
 * Apply some load `./load.sh`
 * Open a new terminal or tab in your shell
-* Look at the hpa occasionally to see the cpu usage go up `kubectl get hpa -n k8s-workshop`
-* The number of pods should scale up to meet the new demand `kubectl get deployment, po -n k8s-workshop`
+* Look at the hpa occasionally to see the cpu usage go up `kubectl get hpa -n django-multi-tier`
+* The number of pods should scale up to meet the new demand `kubectl get deployment, po -n django-multi-tier`
