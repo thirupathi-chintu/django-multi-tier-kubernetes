@@ -1,0 +1,13 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: webapp
+  namespace: k8s-workshop
+spec:
+  minReplicas: 1
+  maxReplicas: 50
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: webapp
+  targetCPUUtilizationPercentage: 30
