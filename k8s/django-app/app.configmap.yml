@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: webapp
-  namespace: django-multi-tier
-data:
-  app.dependency.url: 'https://test.dependency.foo.bar/api/v1/'
-  app.dependency.require_tls: truex

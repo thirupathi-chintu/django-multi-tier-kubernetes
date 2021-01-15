@@ -16,14 +16,13 @@ spec:
     spec:
       containers:
         - name: webapp
-          image: quay.io/fairwinds/k8s-workshop:latest
-          command: ["ruby", "app/app.rb"]
+          image: thirupathip/django-test
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3
             httpGet:
               path: /
-              port: 8080
+              port: 8000
               scheme: HTTP
             initialDelaySeconds: 3
             periodSeconds: 3
@@ -33,10 +32,10 @@ spec:
             failureThreshold: 1
             httpGet:
               path: /
-              port: 8080
+              port: 8000
               scheme: HTTP
           ports:
-          - containerPort: 8080
+          - containerPort: 8000
             name: http
           volumeMounts:
             - name: secrets
@@ -48,21 +47,7 @@ spec:
               value: '6379'
             # - name: CHAOS
             #   value: true
-            - name: SECRET1
-              valueFrom:
-                secretKeyRef:
-                  name: webapp
-                  key: val1
-            - name: DEPENDENCY_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: webapp
-                  key: app.dependency.url
-            - name: DEPENDENCY_REQUIRE_TLS
-              valueFrom:
-                configMapKeyRef:
-                  name: webapp
-                  key: app.dependency.require_tls
+            
           resources:
             limits:
               cpu: 200m
@@ -70,11 +55,11 @@ spec:
             requests:
               cpu: 200m
               memory: 300Mi
-      volumes:
-        - name: secrets
-          secret:
-            secretName: webapp
-            items:
-            - key: val2
-              path: secret_file
-              mode: 511
+      # volumes:
+      #   - name: secrets
+      #     secret:
+      #       secretName: webapp
+      #       items:
+      #       - key: val2
+      #         path: secret_file
+      #         mode: 511
