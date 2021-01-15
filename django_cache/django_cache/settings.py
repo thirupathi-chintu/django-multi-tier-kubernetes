@@ -17,7 +17,7 @@ import urlparse
 redis_url = urlparse.urlparse(os.environ.get('REDIS_HOST'))
 redis_port = urlparse.urlparse(os.environ.get('REDIS_PORT'))
 
-location_add = "redis://"+redis_url+redis_port+"/1"
+location_add = "redis://"+redis_url+":"+redis_port+"/1"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
