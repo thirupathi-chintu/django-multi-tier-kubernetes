@@ -16,33 +16,8 @@ using linux then install using the below commands or follow the instructions giv
 
 ```
 # command to install
-sudo apt-get install redis-server
-
-# command to run server
-redis-server
-
-# command to check if running
-redis-cli ping
-
-# output
-PONG
+Make Sure redis URL is correct.
 ```
-
-Now using [pipenv](https://pipenv.readthedocs.io/en/latest/) create a virtualenv and 
-install the libraries, if pipenv is not installed then install it using pip
-
-```
-# install pipenv using
-pip install pipenv
-
-# command to create virtualenv
-pipenv install django django-redis djangorestframework
-
-# command to activate env
-pipenv shell
-```
-
-Two new files will be made by **pipenv** --> ```Pipfile``` and ```Pipfile.lock```
 
 ## Project Setup
 **start django project**
@@ -52,13 +27,13 @@ django-admin startproject django_cache .
 
 **run migrations and server**
 ```
-python manage.py migrate
-python manage.py runserver
+python3 manage.py migrate
+python3 manage.py runserver
 ```
 
 **start app store**
 ```
-python manage.py startapp store
+python3 manage.py startapp store
 ```
 
 **Configure project settings**
@@ -87,7 +62,7 @@ something like this:
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://127.0.0.1:6379/1",  // This is the URL
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
