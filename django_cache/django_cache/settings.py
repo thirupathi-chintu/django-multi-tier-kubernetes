@@ -11,6 +11,13 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import urlparse
+
+redis_url = urlparse.urlparse(os.environ.get('REDIS_HOST'))
+redis_port = urlparse.urlparse(os.environ.get('REDIS_PORT'))
+
+location_add = "redis://"+redis_url+redis_port+"/1"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -129,7 +136,7 @@ STATIC_URL = '/static/'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://redis-primary:6379/1",
+        "LOCATION": location_add,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
