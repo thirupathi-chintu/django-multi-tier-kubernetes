@@ -12,10 +12,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-import urlparse
 
-redis_url = urlparse.urlparse(os.environ.get('REDIS_HOST'))
-redis_port = urlparse.urlparse(os.environ.get('REDIS_PORT'))
+redis_url = os.environ.get('REDIS_HOST')
+redis_port = os.environ.get('REDIS_PORT')
 
 location_add = "redis://"+redis_url+":"+redis_port+"/1"
 
