@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: webapp
-  namespace: django-multi-tier
+  # namespace: django-multi-tier
   labels:
     app: webapp
 spec:

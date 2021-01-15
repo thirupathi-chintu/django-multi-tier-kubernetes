@@ -2,7 +2,7 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: webapp
-  namespace: django-multi-tier
+  # namespace: django-multi-tier
 spec:
   minReplicas: 1
   maxReplicas: 50

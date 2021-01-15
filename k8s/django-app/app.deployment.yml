@@ -4,7 +4,7 @@ metadata:
   annotations:
     flux.weave.works/automated: "true"
   name: webapp
-  namespace: django-multi-tier
+  # namespace: django-multi-tier
 spec:
   selector:
     matchLabels:
