@@ -16,7 +16,7 @@ import os
 redis_url = os.environ.get('REDIS_HOST')
 redis_port = os.environ.get('REDIS_PORT')
 
-location_add = "redis://"+redis_url+":"+redis_port+"/1"
+location = "redis://redis-primary:6379/1"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -135,7 +135,7 @@ STATIC_URL = '/static/'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": location_add,
+        "LOCATION": "redis://redis-primary:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
