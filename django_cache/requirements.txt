@@ -2,4 +2,3 @@ django_redis
 Django
 djangorestframework
 django-template-model
-urlparse
