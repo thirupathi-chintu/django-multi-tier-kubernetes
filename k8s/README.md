@@ -1,7 +1,4 @@
-# Kubernetes workshop with Fairwinds
-
-## Complete Workshop Walkthrough
-Below are the steps that we'll be using to deploy a complete web app. Note that this demo will deploy a broken application and we'll be fixing the Kubernetes yaml documents to make the deployment successful.
+# Kubernetes Deployment
 
 ### Deploying Redis Database
 First we'll be:
@@ -12,10 +9,10 @@ First we'll be:
 
 1. Create namespace in Kubernetes
     * `kubectl apply -f namespace.yml`
-      Uses `kubectl` to `apply` the file (`-f`) with the `Namespace` definition. Note that the namespace we're deploying into is defined in the yaml documents in `01_redis/`.
+      Uses `kubectl` to `apply` the file (`-f`) with the `Namespace` definition. Note that the namespace we're deploying into is defined in the yaml documents in `redis-app/`.
 1. Deploy Redis Master and Replica
-    * `kubectl apply -f 01_redis/`
-      Uses `kubectl` to `apply` all `yaml` definitions in the folder `01_redis/`.
+    * `kubectl apply -f redis-app/`
+      Uses `kubectl` to `apply` all `yaml` definitions in the folder `redis-app/`.
     * `kubectl get deployments`
       Gets the `deployment` resources from Kubernetes in the `default` namespace. You will not see the redis deployments since we have deployed them to a different namespace.
     * `kubectl get pods`
@@ -41,8 +38,8 @@ Next we'll be:
 - CURL the web app again to test
 
 1. Deploy the basic webapp
-    * `kubectl apply -f 02_webapp/`
-      This deploys all the yaml definitions in the `02_webapp/` folder. Note that we are _not_ defining the namespace in the `metadata` of the yaml, so it will default to the `default` namespace configured with `kubectl`.
+    * `kubectl apply -f django-app/`
+      This deploys all the yaml definitions in the `django-app/` folder. Note that we are _not_ defining the namespace in the `metadata` of the yaml, so it will default to the `default` namespace configured with `kubectl`.
     * `kubectl get services`
       Gets all the `service` definitions in the `default` namespace. We are going to wait until `External IP` has an IP Address.
 1. Test the web app
@@ -53,9 +50,9 @@ Next we'll be:
     * `kubectl logs <webapp pod name>`
       Let's look at the errors in the logs from the pod... Cannot connect to redis because it's default namespace DNS resolution won't work from a different namespace.
 1. Fix the broken deployment
-    * `kubectl delete -f 02_webapp/`
+    * `kubectl delete -f django-app/`
       This will delete all the objects we created so that we can deploy correctly into the `django-multi-tier` namespace.
-    * `kubectl apply -f 02_webapp/ --namespace django-multi-tier`
+    * `kubectl apply -f django-app/ --namespace django-multi-tier`
       This overrides the unset `default` namespace and deploys all the yaml files into the `django-multi-tier` namespace.
     * `kubectl get services --namespace django-multi-tier`
       We need to see the _new_ service we've created, so the Load Balancer IP will have changed.
@@ -68,7 +65,6 @@ Next we'll be:
 ### Scaling the Application based on CPU
 This section allows us to load test the web app and see the cluster responding by scaling the pod count up.
 
-* Apply some load `./load.sh`
 * Open a new terminal or tab in your shell
 * Look at the hpa occasionally to see the cpu usage go up `kubectl get hpa -n django-multi-tier`
 * The number of pods should scale up to meet the new demand `kubectl get deployment, po -n django-multi-tier`

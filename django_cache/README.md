@@ -22,7 +22,7 @@ Make Sure redis URL is correct.
 ## Project Setup
 **start django project**
 ```
-django-admin startproject django_cache .
+django-admin startproject django_cache
 ```
 
 **run migrations and server**
