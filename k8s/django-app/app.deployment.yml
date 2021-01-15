@@ -37,9 +37,9 @@ spec:
           ports:
           - containerPort: 8000
             name: http
-          volumeMounts:
-            - name: secrets
-              mountPath: "/etc/secrets"
+          # volumeMounts:
+          #   - name: secrets
+          #     mountPath: "/etc/secrets"
           env:
             - name: REDIS_HOST
               value: 'redis-primary'
