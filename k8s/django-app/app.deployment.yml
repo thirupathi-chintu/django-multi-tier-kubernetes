@@ -18,35 +18,14 @@ spec:
         - name: webapp
           image: thirupathip/django-test
           imagePullPolicy: IfNotPresent
-          livenessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /
-              port: 8000
-              scheme: HTTP
-            initialDelaySeconds: 3
-            periodSeconds: 3
-            successThreshold: 1
-            timeoutSeconds: 1
-          readinessProbe:
-            failureThreshold: 1
-            httpGet:
-              path: /
-              port: 8000
-              scheme: HTTP
           ports:
           - containerPort: 8000
             name: http
-          # volumeMounts:
-          #   - name: secrets
-          #     mountPath: "/etc/secrets"
           env:
             - name: REDIS_HOST
               value: 'redis-primary'
             - name: REDIS_PORT
               value: '6379'
-            # - name: CHAOS
-            #   value: true
             
           resources:
             limits:
@@ -55,11 +34,3 @@ spec:
             requests:
               cpu: 200m
               memory: 300Mi
-      # volumes:
-      #   - name: secrets
-      #     secret:
-      #       secretName: webapp
-      #       items:
-      #       - key: val2
-      #         path: secret_file
-      #         mode: 511
